@@ -7,20 +7,20 @@ async function llmScore(
   token: string,
   security: { honeypot: boolean; holders: number; liquidityUsd: number }
 ): Promise<number | null> {
-  if (!config.openaiApiKey) return null;
+  if (!config.llmApiKey) return null;
   const prompt = [
     `You are a crypto risk analyst. Score the token ${token} from 0 (scam) to 100 (safe investment).`,
     `Security data: honeypot=${security.honeypot}, holders=${security.holders}, liquidityUsd=${security.liquidityUsd}.`,
     "Reply with only a number.",
   ].join("\n");
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+  const res = await fetch(`${config.llmApiBase}/chat/completions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${config.openaiApiKey}`,
+      Authorization: `Bearer ${config.llmApiKey}`,
     },
     body: JSON.stringify({
-      model: config.openaiModel,
+      model: config.llmModel,
       messages: [{ role: "user", content: prompt }],
       max_tokens: 8,
     }),
