@@ -105,7 +105,7 @@ export async function getSignals(): Promise<SignalCandidate[]> {
       source: "smart-money",
       strength: Number(r["strength"] ?? 50),
       price: Number(r["price"] ?? 0),
-      direction: Number(r["strength"] ?? 0) >= 50 ? "buy" : "sell",
+      direction: (Number(r["strength"] ?? 0) >= 50 ? "buy" : "sell") as "buy" | "sell",
       mode: "real",
     }));
   }
@@ -116,16 +116,16 @@ export async function getSignals(): Promise<SignalCandidate[]> {
       source: "volume-spike",
       strength: 40 + Math.round(Math.random() * 50),
       price,
-      direction: Math.random() > 0.3 ? "buy" : "sell",
-      mode: "sim",
+      direction: (Math.random() > 0.3 ? "buy" : "sell") as "buy" | "sell",
+      mode: "sim" as "sim" | "real",
     },
     {
       token: config.quoteToken,
       source: "hot-token",
       strength: 30 + Math.round(Math.random() * 55),
       price,
-      direction: Math.random() > 0.35 ? "buy" : "sell",
-      mode: "sim",
+      direction: (Math.random() > 0.35 ? "buy" : "sell") as "buy" | "sell",
+      mode: "sim" as "sim" | "real",
     },
   ].sort((a, b) => b.strength - a.strength);
 }

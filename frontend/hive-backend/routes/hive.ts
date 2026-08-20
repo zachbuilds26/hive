@@ -1,15 +1,12 @@
 import { Hono } from "hono";
-import { store, setAgentAction } from "../memory/db";
+import { store, setAgentAction, seedCrewIfNeeded } from "../memory/db";
 import { scoutRun } from "../agents/scout";
 import { analystRun } from "../agents/analyst";
 import { executorRun } from "../agents/executor";
 import { overseerRun, computeMetrics } from "../agents/overseer";
-import { seedCrew } from "../services/payments";
 import { config, isRealMode } from "../config";
 
-export const hive = new Hono();
-
-let seeded = false;
+export const hive = new Hono<{ Variables: { store: typeof store } }>().basePath("/api/hive");
 
 async function runCycle(): Promise<string[]> {
   const log: string[] = [];
@@ -87,10 +84,7 @@ hive.post("/deposit", async (c) => {
   if (!amount || amount <= 0) {
     return c.json({ ok: false, error: "amount must be a positive number" }, 400);
   }
-  if (!seeded) {
-    seedCrew();
-    seeded = true;
-  }
+  seedCrewIfNeeded();
   store.capital += amount;
   const executor = store.agents.executor;
   executor.balance.USDG = (executor.balance.USDG ?? 0) + amount;

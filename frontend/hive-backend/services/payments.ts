@@ -1,9 +1,9 @@
-import { store, nextId, addPayment, AgentState } from "../memory/db";
+import { store, nextId, addPayment, AgentState, Payment } from "../memory/db";
 import { config, isRealMode } from "../config";
 
 export interface PaymentResult {
   ok: boolean;
-  payment?: ReturnType<typeof store.payments[0]>;
+  payment?: Payment;
   error?: string;
 }
 

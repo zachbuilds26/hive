@@ -139,6 +139,22 @@ export function setAgentAction(name: string, action: string, status: AgentState[
   agent.status = status;
 }
 
+let seeded = false;
+export function seedCrewIfNeeded() {
+  if (seeded) return;
+  seeded = true;
+  if (store.capital > 0) return;
+  const split = 100 / 4;
+  for (const key of Object.keys(store.agents)) {
+    const agent = store.agents[key];
+    agent.balance.USDG = (agent.balance.USDG ?? 0) + split;
+  }
+  store.capital = 100;
+  const overseer = store.agents.overseer;
+  overseer.lastAction = "Crew funded with 100 USDG";
+  overseer.lastActionAt = Date.now();
+}
+
 export function addSignal(signal: Signal) {
   store.signals.unshift(signal);
   store.signals = store.signals.slice(0, 200);

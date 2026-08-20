@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getTrades, getStatus, HIVE_API, timeAgo, type Trade, type StatusResponse } from "@/lib/api";
+import { getTrades, getStatus, timeAgo, type Trade, type StatusResponse } from "@/lib/api";
 
 const CREW = [
   {
@@ -278,7 +278,7 @@ export default function Landing() {
         <div className="px-6 py-8 max-w-6xl w-full mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-ink-faint">
           <span className="font-display text-ink">HIVE</span>
           <span>Built for the BuildX AI Season Hackathon on X Layer · @XLayerOfficial</span>
-          <a href={HIVE_API} target="_blank" rel="noreferrer" className="hover:text-ink transition-colors">
+          <a href="/api/hive/status" target="_blank" rel="noreferrer" className="hover:text-ink transition-colors">
             API
           </a>
         </div>

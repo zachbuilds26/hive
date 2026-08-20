@@ -1,5 +1,4 @@
-export const HIVE_API =
-  process.env.NEXT_PUBLIC_HIVE_API || "http://localhost:3001";
+export const HIVE_API = process.env.NEXT_PUBLIC_HIVE_API || "/api";
 
 export interface AgentInfo {
   name: string;
