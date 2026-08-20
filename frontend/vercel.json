@@ -1,8 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/hive/tick",
-      "schedule": "0 * * * *"
-    }
-  ]
-}
+{}
